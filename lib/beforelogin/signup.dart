@@ -1,0 +1,209 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:uberbooking_app/beforelogin/login.dart';
+import 'package:uberbooking_app/beforelogin/thankyoupage.dart';
+import 'package:uberbooking_app/custom/textformfield_cust.dart';
+
+class signuppage extends StatefulWidget {
+  const signuppage({super.key});
+
+  @override
+  State<signuppage> createState() => _signuppageState();
+}
+
+class _signuppageState extends State<signuppage> {
+  final String urllink =
+      "https://th.bing.com/th/id/OIP.eDfds46iXzl6qTA5yVkRJAHaHG?rs=1&pid=ImgDetMain";
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passcontroller = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController numbercontroller = TextEditingController();
+  bool isvisible = true;
+
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  Future authsigup(
+      {required email,
+      required password,
+      required name,
+      required number,
+      required String urllink,
+      required BuildContext context}) async {
+    try {
+      var ref = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      var docid = ref.user!.uid.toString();
+      var data = {
+        "email": email,
+        "password": password,
+        "name": name,
+        "number": number,
+        "url": urllink
+      };
+      var dbref = await FirebaseFirestore.instance
+          .collection("Mydatabase")
+          .doc(docid)
+          .set(data);
+      Fluttertoast.showToast(msg: "success");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const thankyoupage(),
+          ));
+    } on FirebaseException catch (e) {
+      Fluttertoast.showToast(msg: e.code);
+    } catch (e) {
+      Fluttertoast.showToast(msg: "error");
+    }
+  }
+
+  Future databasestore(email, password, name, number, docid) async {
+    var data = {
+      "email": email,
+      "password": password,
+      "name": name,
+      "number": number,
+      "url": urllink
+    };
+    var dbref = await FirebaseFirestore.instance
+        .collection("Mydatabase")
+        .doc(docid)
+        .set(data);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Form(
+          key: formkey,
+          child: Stack(
+            children: [
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 172, 223, 246)),
+              ),
+              Positioned(
+                  top: 100,
+                  left: 110,
+                  right: 100,
+                  child: Text(
+                    "Sign Up Page",
+                    style: GoogleFonts.oswald(
+                        fontSize: 30, fontWeight: FontWeight.bold),
+                  )),
+              Positioned(
+                top: 200,
+                left: 40,
+                right: 40,
+                child: Container(
+                  height: 370,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: const [BoxShadow(blurRadius: 10)],
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      cust_textformfield(
+                          keyboad: TextInputType.name,
+                          command: "enter your name",
+                          command2: "enter your full name",
+                          controller: namecontroller,
+                          label: "Enter your name",
+                          preicon: const Icon(Icons.person)),
+                      cust_textformfield(
+                          keyboad: TextInputType.emailAddress,
+                          command: "enter your email",
+                          command2: "enter proper email id",
+                          controller: emailcontroller,
+                          label: "Enter your email",
+                          preicon: const Icon(Icons.email)),
+                      cust_textformfield(
+                          keyboad: TextInputType.phone,
+                          command: "enter your phone number",
+                          command2: "enter valid number",
+                          controller: numbercontroller,
+                          label: "Enter your number",
+                          preicon: const Icon(Icons.phone)),
+                      cust_textformfield(
+                          keyboad: TextInputType.name,
+                          command: "emter your password",
+                          command2: "enter a strong password",
+                          // suffics: IconButton(
+                          //     onPressed: () {
+                          //       setState(() {
+                          //         isvisible = !isvisible;
+                          //       });
+                          //     },
+                          //     icon: Icon(isvisible
+                          //         ? Icons.visibility_off
+                          //         : Icons.visibility)),
+                          controller: passcontroller,
+                          label: "Enter your password",
+                          preicon: const Icon(Icons.lock))
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                  top: 510,
+                  left: 160,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.black)),
+                      onPressed: () {
+                        if (formkey.currentState!.validate()) {
+                          authsigup(
+                              urllink: urllink,
+                              email: emailcontroller.text,
+                              password: passcontroller.text,
+                              name: namecontroller.text,
+                              number: numbercontroller.text,
+                              context: context);
+                        } else {
+                          "something went wrong";
+                        }
+                      },
+                      child: const Text("signup"))),
+              Positioned(
+                top: 570,
+                left: 30,
+                child: Row(
+                  children: [
+                    const Text(
+                      "ALREADY HAVE AN ACCOUNT?",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const loginpage(),
+                              ));
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
