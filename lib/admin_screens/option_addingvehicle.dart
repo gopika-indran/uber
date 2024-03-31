@@ -80,7 +80,7 @@ class _OptionaddvehicleState extends State<Optionaddvehicle> {
                 ),
               ),
               GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Addauto(),
@@ -102,7 +102,7 @@ class _OptionaddvehicleState extends State<Optionaddvehicle> {
           ),
           Center(
             child: GestureDetector(
-              onTap: () => Navigator.push(
+              onTap: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const AddBike(),

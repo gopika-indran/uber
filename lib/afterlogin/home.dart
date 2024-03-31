@@ -26,6 +26,7 @@ class _homepageState extends State<homepage> {
   LatLng? _currentPosition;
   String name = "";
   String email = "";
+  String imageurl = "";
   FirebaseAuth auth = FirebaseAuth.instance;
   late User? _username;
 
@@ -44,6 +45,7 @@ class _homepageState extends State<homepage> {
     setState(() {
       name = usersnapshort["name"];
       email = usersnapshort["email"];
+      imageurl = usersnapshort["url"];
     });
   }
 
@@ -115,7 +117,16 @@ class _homepageState extends State<homepage> {
                 child: DrawerHeader(
                   child: Row(
                     children: [
-                      Image.asset("assets/images/user_icon.png"),
+                      imageurl.isNotEmpty
+                          ? CircleAvatar(
+                              radius: 55,
+                              backgroundImage: NetworkImage(imageurl),
+                            )
+                          : const CircleAvatar(
+                              radius: 55,
+                              backgroundImage: NetworkImage(
+                                  "https://thumbs.dreamstime.com/b/default-avatar-profile-flat-icon-social-media-user-vector-portrait-unknown-human-image-default-avatar-profile-flat-icon-184330869.jpg"),
+                            ),
                       const SizedBox(
                         width: 20,
                       ),
@@ -125,7 +136,7 @@ class _homepageState extends State<homepage> {
                           Text(
                             name,
                             style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 5,
@@ -133,7 +144,7 @@ class _homepageState extends State<homepage> {
                           textcustom(
                               titletext: email,
                               colortext: Colors.black,
-                              size: 15)
+                              size: 11)
                         ],
                       )
                     ],

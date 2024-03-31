@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uberbooking_app/beforelogin/login.dart';
 import 'package:uberbooking_app/beforelogin/welcomepage.dart';
 import 'package:uberbooking_app/custom/textcustom.dart';
@@ -47,6 +48,11 @@ class _AdminProfileState extends State<AdminProfile> {
       number = usersnapshort["number"];
       imageurl = usersnapshort["url"];
     });
+  }
+
+  void store() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool("login", false);
   }
 
   @override
@@ -159,7 +165,8 @@ class _AdminProfileState extends State<AdminProfile> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    store();
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const loginpage(),

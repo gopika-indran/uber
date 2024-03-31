@@ -48,7 +48,7 @@ class _AddBikeState extends State<AddBike> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const Bikecollections()));

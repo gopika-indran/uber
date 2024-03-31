@@ -61,7 +61,7 @@ class _ServicePageState extends State<ServicePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Availablecaruserpage(),
@@ -77,7 +77,7 @@ class _ServicePageState extends State<ServicePage> {
                 ),
               ),
               GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Autoavailable(),
@@ -99,7 +99,7 @@ class _ServicePageState extends State<ServicePage> {
           ),
           Center(
             child: GestureDetector(
-              onTap: () => Navigator.push(
+              onTap: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const BikeAvailable())),

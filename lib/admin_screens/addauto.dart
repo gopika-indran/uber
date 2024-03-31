@@ -47,10 +47,10 @@ class _AddautoState extends State<Addauto> {
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => autocollection()));
+                          builder: (context) => const autocollection()));
                 },
                 child: textcustom(
                     titletext: "SAVE", colortext: Colors.white, size: 14))
