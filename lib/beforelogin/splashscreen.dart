@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uberbooking_app/admin_screens/curveditems_admin.dart';
 import 'package:uberbooking_app/afterlogin/curved_navigation_bar.dart';
 import 'package:uberbooking_app/beforelogin/welcomepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,13 +16,23 @@ class splashscreen extends StatefulWidget {
 
 class _splashscreenState extends State<splashscreen> {
   bool? userloged;
+  bool? adminlogin;
   void checklogin() async {
+    SharedPreferences adminpreference = await SharedPreferences.getInstance();
+    adminlogin = adminpreference.getBool("admlogin");
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
     userloged = sharedPreferences.getBool("login");
-    if (userloged == false || userloged == null) {
+    if (adminlogin == true) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Curveditems(),
+          ));
+    } else if (userloged == false || userloged == null) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const welcomepage()));
-    } else {
+    } else if (userloged == true) {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const motiontabbar()));
     }

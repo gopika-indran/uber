@@ -176,9 +176,16 @@ class _loginpageState extends State<loginpage> {
       User? user = ref.user;
 
       if (user!.uid == Myconstants().adminid) {
+        SharedPreferences adminpreference =
+            await SharedPreferences.getInstance();
+        adminpreference.setBool("admlogin", true);
+
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const Curveditems()));
       } else {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.setBool("login", true);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const motiontabbar()));
       }
