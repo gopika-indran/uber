@@ -31,139 +31,144 @@ class _loginpageState extends State<loginpage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Form(
-            key: formkey,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Stack(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height / 2.3,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(color: Colors.white),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 2.3,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(95)),
-                        color: Colors.blueAccent),
-                    child: Image.asset(
-                      "assets/taxiimg.png",
-                      scale: 0.8,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 1.8,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Form(
+              key: formkey,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height / 2.3,
                       width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(color: Colors.blue),
+                      decoration: const BoxDecoration(color: Colors.white),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 1.80,
+                    Container(
+                      height: MediaQuery.of(context).size.height / 2.3,
                       width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
-                          borderRadius:
-                              BorderRadius.only(topLeft: Radius.circular(65)),
-                          color: Colors.white),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Login Page",
-                            style: GoogleFonts.oswald(
-                                fontSize: 30, fontWeight: FontWeight.bold),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 10, right: 10),
-                            child: cust_textformfield(
-                              keyboad: TextInputType.emailAddress,
-                              command: "enter email id",
-                              command2: "enter proper way of email",
-                              controller: emailcontroller,
-                              label: "email",
-                              preicon: const Icon(Icons.email),
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(95)),
+                          color: Colors.black),
+                      child: Image.asset(
+                        "assets/uberlogin.jpg",
+                        scale: 0.8,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 1.8,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(color: Colors.black),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 1.80,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(65)),
+                            color: Colors.white),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Login Page",
+                              style: GoogleFonts.oswald(
+                                  fontSize: 30, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 1, left: 10, right: 10),
-                            child: cust_textformfield(
-                              keyboad: TextInputType.name,
-                              command: "enter password",
-                              command2: "enter strong password",
-                              controller: passcontroller,
-                              label: "password",
-                              obscuretext: isvisible,
-                              preicon: const Icon(Icons.lock),
-                              suffics: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isvisible = !isvisible;
-                                    });
-                                  },
-                                  icon: Icon(isvisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility)),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 1, left: 10, right: 10),
+                              child: cust_textformfield(
+                                keyboad: TextInputType.emailAddress,
+                                command: "enter email id",
+                                command2: "enter proper way of email",
+                                controller: emailcontroller,
+                                label: "email",
+                                preicon: const Icon(Icons.email),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 180),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const forgetpage(),
-                                      ));
-                                },
-                                child: const Text("FORGET PASSWORD?")),
-                          ),
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.black)),
-                              onPressed: () {
-                                if (formkey.currentState!.validate()) {
-                                  loginauth(
-                                      email: emailcontroller.text,
-                                      password: passcontroller.text,
-                                      context: context);
-                                }
-                                storelogin();
-                              },
-                              child: const Text("LOGIN")),
-                          Row(
-                            children: [
-                              const Text("Do not have an account?"),
-                              TextButton(
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 1, left: 10, right: 10),
+                              child: cust_textformfield(
+                                keyboad: TextInputType.name,
+                                command: "enter password",
+                                command2: "enter strong password",
+                                controller: passcontroller,
+                                label: "password",
+                                obscuretext: isvisible,
+                                preicon: const Icon(Icons.lock),
+                                suffics: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isvisible = !isvisible;
+                                      });
+                                    },
+                                    icon: Icon(isvisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 180),
+                              child: TextButton(
                                   onPressed: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const signuppage(),
+                                              const forgetpage(),
                                         ));
                                   },
-                                  child: const Text("Register Here")),
-                            ],
-                          ),
-                        ],
+                                  child: const Text("FORGET PASSWORD?")),
+                            ),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.black)),
+                                onPressed: () {
+                                  if (formkey.currentState!.validate()) {
+                                    loginauth(
+                                        email: emailcontroller.text,
+                                        password: passcontroller.text,
+                                        context: context);
+                                  }
+                                  storelogin();
+                                },
+                                child: const Text("LOGIN")),
+                            Row(
+                              children: [
+                                const Text("Do not have an account?"),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const signuppage(),
+                                          ));
+                                    },
+                                    child: const Text("Register Here")),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            )),
+                    )
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }
